@@ -1,0 +1,17 @@
+name: FullBackup
+main: me.stevetech.fullbackup.FullBackup
+version: 1.0
+description: Backup the server
+author: Steve-Tech
+api-version: 1.16
+commands:
+  FullBackup:
+    aliases: backup
+    description: Backup the server
+    usage: /<command> [start|stop|reload]
+    permission: FullBackup
+    permission-message: You don't have permission to use this command!
+permissions:
+  FullBackup:
+    description: Allows you to backup the server
+    default: op
