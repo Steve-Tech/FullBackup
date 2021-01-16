@@ -35,7 +35,7 @@ public class FullBackup extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (backupTask.isAlive()) {
+        if (backupTask != null && backupTask.isAlive()) {
             getLogger().warning("Stopping Backup...");
             backupTask.interrupt();
             try {
@@ -120,12 +120,18 @@ public class FullBackup extends JavaPlugin {
             if (args.length == 1) {
                 switch (args[0]) {
                     case "start":
-                        startTask();
+                        if (!(backupTask != null && backupTask.isAlive())) {
+                            startTask();
+                        } else {
+                            sender.sendMessage(chatPrefix + ChatColor.RED + "Backup is already running.");
+                        }
                         return true;
                     case "stop":
-                        if (backupTask.isAlive()) {
+                        if (backupTask != null && backupTask.isAlive()) {
                             getServer().broadcast(chatPrefix + ChatColor.RED + "Stopping Backup...", "FullBackup");
                             backupTask.interrupt();
+                        } else {
+                            sender.sendMessage(chatPrefix + ChatColor.RED + "There is no backup already running.");
                         }
                         return true;
                     case "reload":
